@@ -1,0 +1,16 @@
+[package]
+name = "test-exec"
+version = "0.1.0"
+authors = ["Draphar <draphar-code@protonmail.com>"]
+edition = "2018"
+description = "Test your command line applications comfortably"
+documentation = "https://docs.rs/test-exec/"
+homepage = "https://github.com/Draphar/test-exec/blob/master/README.md"
+repository = "https://github.com/Draphar/test-exec/"
+readme = "README.md"
+keywords = ["cli", "command", "test", "testing"]
+categories = ["development-tools::testing"]
+license = "MIT"
+
+[dependencies]
+wait-timeout = "0.2.0"
