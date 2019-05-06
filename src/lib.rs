@@ -1,6 +1,54 @@
 /*!
+## test-exec - Test your command line applications comfortably
 
-##
+This crate provides the [`exec!`] macro for testing binary targets.
+It executes your command, verifies the output and is highly customizable.
+
+A few previews, assuming you have a binary target called `my_bin`:
+
+- minimum configuration:
+    `exec!("my_bin");`
+
+- (almost) maximum configuration:
+```
+let output = exec!{
+    "my_bin",
+    args: ["-p", "/"],
+    cwd: "/tmp",
+    env: {
+        THREADS: "4"
+    },
+    stdin: b"show-hidden",
+    timeout: 60000,
+    log: true,
+
+    code: 0,
+    stdout: b"Started program...\nDone.\n",
+    stderr: []
+};
+
+// `output` can be used here like a normal process::Output
+```
+
+## Input
+
+The program name is the only required parameter and does not need a key.
+
+Arguments can be set using the `args` key, which accepts iterable objects.
+Just when using the [`Command::args()`] function must different arguments be splitted.
+
+The current working directory can be set by the `cwd` key.
+
+The environment can be modified using the `env` key,
+which is a pseudo-object of environment variables.
+To clear the environment, the `clear_env` key can be set to `false`.
+
+The program's `stdin` is set by the `stdin` key.
+
+A maximum running time can be configured through the `timeout` key.
+Programs run indefinitely by default.
+
+The output can be logged to `stdout` for debug purposes by setting `log` to `true`.
 
 ## Comparing the output
 
@@ -20,6 +68,8 @@ are added to the front of the PATH, to make them have maximum priority. The rele
 
 If a custom PATH path is provided via the `env` key, it is modified as well.
 
+[`exec!`]: macro.exec.html
+[`Command::args()`]: https://doc.rust-lang.org/stable/std/process/struct.Command.html#method.args
 [`Output`]: https://doc.rust-lang.org/stable/std/process/struct.Output.html
 */
 
@@ -82,6 +132,7 @@ use std::fmt::Debug;
 ///
 /// The `clear_env` option clears all environment variables *before*
 /// applying the `env` values. It is set to `false` by default.
+/// Remember to keep the path of the program in the path when using this key.
 ///
 /// ```
 /// exec!{
