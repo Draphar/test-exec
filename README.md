@@ -70,14 +70,14 @@ See the [documentation][exec-doc] for more.
 
 As `test-exec` is a testing library, it should be added to the dev-dependencies:
 
-```
+```toml
 [dev-dependencies]
 test-exec = "0.1.0
 ```
 
 And it can be used in code by doing
 
-```
+```rust
 #[macro_use]
 extern crate test_exec;
 ```
@@ -85,7 +85,7 @@ extern crate test_exec;
 For instance in an integration test for a binary called `my_pwd`, whichs prints the current working directory
 
 *tests/bin.rs*
-```
+```rust
 #[macro_use]
 extern crate test_exec;
 
